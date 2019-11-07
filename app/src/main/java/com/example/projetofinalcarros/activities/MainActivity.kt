@@ -12,6 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import com.example.projetofinalcarros.R
+import com.example.projetofinalcarros.extensions.setupToolbar
+import com.example.projetofinalcarros.extensions.toast
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 class MainActivity :BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -19,6 +24,20 @@ class MainActivity :BaseActivity(), NavigationView.OnNavigationItemSelectedListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Toolbar
+        setupToolbar(R.id.toolbar)
+
+        //menulateral
+        setUpNavDrawer()
+
+        //Botao FAB(+)
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+
+        }
+
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -27,68 +46,67 @@ class MainActivity :BaseActivity(), NavigationView.OnNavigationItemSelectedListe
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+    }
 
-        navView.setNavigationItemSelectedListener(this)
+       //Configuraçap do menu lateral
+
+    private  fun setUpNavDrawer(){
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toogle = ActionBarDrawerToggle(this,drawer_layout, toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toogle)
+        nav_view.setNavigationItemSelectedListener(this)
+
+
     }
 
     override fun onBackPressed() {
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
+        super.onBackPressed()
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)){
+            drawer_layout.closeDrawer(GravityCompat.START)
+        }else{
             super.onBackPressed()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_home -> {
-                // Handle the camera action
+            R.id.nav_item_carros_todos -> {
+                toast("Clicou em carros")
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_item_carros_classicos -> {
+                toast("Clicou em carros classicos")
             }
-            R.id.nav_slideshow -> {
-
+            R.id.nav_item_carros_esportivos -> {
+                toast("Clicou em carros esportivos")
             }
-            R.id.nav_tools -> {
-
+            R.id.nav_item_carros_luxo -> {
+                toast("Clicou em carrosluxo")
             }
-            R.id.nav_share -> {
-
+            R.id.nav_item_site_livro -> {
+                toast("Clicou em site do Livro")
             }
-            R.id.nav_send -> {
-
+            R.id.nav_item_settings -> {
+                toast("Clicou em configurações")
             }
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        drawerLayout.closeDrawer(GravityCompat.START)
+
+        //fecha menu depois de tratar o evento
+
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.closeDrawer(GravityCompat.START)
         return true
+
     }
-}
+
+
+
+
+    }
+
+
+
