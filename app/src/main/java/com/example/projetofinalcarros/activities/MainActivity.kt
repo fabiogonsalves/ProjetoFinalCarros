@@ -111,7 +111,8 @@ class MainActivity :BaseActivity(), NavigationView.OnNavigationItemSelectedListe
 
 
             R.id.nav_item_site_livro -> {
-                toast("Clicou em site do Livro")
+               // toast("Clicou em site do Livro")
+                startActivity<SiteLivroActivity>()
             }
             R.id.nav_item_settings -> {
                 toast("Clicou em configurações")
